@@ -1,0 +1,35 @@
+{# 安全交叉表：t 为 payload。隐藏格一律显示“—”，不输出真实计数。 #}
+<table class="crosstab">
+  <thead>
+    <tr>
+      <th>病区 \ 周次</th>
+      {% for w in t.weeks %}<th>{{ w }}</th>{% endfor %}
+      <th class="total">行合计</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in range(t.wards|length) %}
+    <tr>
+      <th>{{ t.wards[i] }}</th>
+      {% for j in range(t.weeks|length) %}
+        {% set c = t.cells[i][j] %}
+        {% if c.hidden %}
+      <td class="hidden" title="已隐藏">—</td>
+        {% else %}
+      <td>{{ c.count }}</td>
+        {% endif %}
+      {% endfor %}
+      <td class="total">{{ t.row_totals[i] }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="total">
+      <th>列合计</th>
+      {% for j in range(t.weeks|length) %}<td class="total">{{ t.col_totals[j] }}</td>{% endfor %}
+      <td class="total grand">{{ t.grand_total }}</td>
+    </tr>
+  </tbody>
+</table>
+<p class="meta">
+  去重后检验记录 {{ t.n_records }} 条；隐藏格 {{ t.n_hidden }} 个（显示为“—”）。
+  来源文件：{{ t.source_filename }}
+</p>

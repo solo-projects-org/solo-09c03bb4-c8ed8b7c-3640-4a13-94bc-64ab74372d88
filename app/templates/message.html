@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h2>{{ title }}</h2>
+<div class="alert">
+  <p>{{ message }}</p>
+  {% if reasons %}
+  <ul>
+    {% for r in reasons %}<li>{{ r }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+</div>
+<p><a href="/upload">返回上传页</a></p>
+{% endblock %}

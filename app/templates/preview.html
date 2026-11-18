@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}预览安全表{% endblock %}
+{% block content %}
+<h2>预览：待确认发布的安全表</h2>
+<p class="notice">以下即为将要公开的表格（生成于 {{ t.created_at }}）。
+   请核对：隐藏格显示为“—”，公开格与行列合计已满足保密规则。</p>
+
+{% include "_table.html" %}
+
+<div class="actions">
+  <form method="post" action="/confirm"
+        onsubmit="return confirm('确认发布？发布后将无法替换或修改。');">
+    <button type="submit" class="primary">确认发布</button>
+  </form>
+  <form method="post" action="/discard">
+    <button type="submit" class="secondary">放弃本次预览</button>
+  </form>
+  <p><a href="/upload">重新上传（替换本预览）</a></p>
+</div>
+{% endblock %}
